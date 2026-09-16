@@ -1,0 +1,60 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+.pnp.*
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+/build
+
+# env
+.env
+.env.*
+!.env.example
+!.env.sample
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+*.log
+
+# os
+.DS_Store
+Thumbs.db
+*.pem
+
+# vercel / cloudflare
+.vercel
+.wrangler
+.open-next
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# termux / cache
+.cache/
+.parcel-cache/
+.turbo/
+
+# backup lokal
+.backup/
