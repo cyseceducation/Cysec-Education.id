@@ -2,7 +2,19 @@ import { threads, threadById } from "@/lib/data";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, User, Clock, MessageSquare } from "lucide-react";
+import type { Metadata } from "next";
 export function generateStaticParams(){ return threads.map(t=>({id:t.id})); }
+export async function generateMetadata({params}:{params:Promise<{id:string}>}):Promise<Metadata>{
+  const {id}=await params;
+  const t=threadById(id);
+  if(!t) return {};
+  return {
+    title: t.title,
+    description: t.body,
+    alternates: { canonical: `/forum/${t.id}` },
+    openGraph: { title: `${t.title} | CYSEC`, description: t.body },
+  };
+}
 export default async function ThreadDetail({params}:{params:Promise<{id:string}>}){
   const {id}=await params;
   const t=threadById(id);

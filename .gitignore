@@ -58,3 +58,4 @@ next-env.d.ts
 
 # backup lokal
 .backup/
+todo.md

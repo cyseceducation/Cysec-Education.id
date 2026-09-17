@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, MapPin, Phone, User, Send, CheckCircle } from "lucide-react";
+import { site } from "@/lib/site";
 export default function ContactPage(){
   const [form,setForm]=useState({name:"",email:"",subject:"",message:""});
   const [submitting,setSubmitting]=useState(false);
@@ -38,7 +39,7 @@ export default function ContactPage(){
               <h3 className="text-2xl font-bold text-white mb-6">Contact Information</h3>
               <div className="space-y-6">
                 <div className="flex items-start gap-4"><div className="w-12 h-12 rounded-lg bg-black/30 flex items-center justify-center border border-[#00f3ff]/20 flex-shrink-0"><MapPin className="w-6 h-6 text-[#00f3ff]"/></div><div><h4 className="text-white font-medium mb-1">Our Location</h4><p className="text-gray-400 text-sm">Cybersecurity District<br/>Jakarta, Indonesia 12345</p></div></div>
-                <div className="flex items-start gap-4"><div className="w-12 h-12 rounded-lg bg-black/30 flex items-center justify-center border border-[#00f3ff]/20 flex-shrink-0"><Mail className="w-6 h-6 text-[#00f3ff]"/></div><div><h4 className="text-white font-medium mb-1">Email Us</h4><p className="text-gray-400 text-sm">contact@cysec.com</p><p className="text-gray-400 text-sm">support@cysec.com</p></div></div>
+                <div className="flex items-start gap-4"><div className="w-12 h-12 rounded-lg bg-black/30 flex items-center justify-center border border-[#00f3ff]/20 flex-shrink-0"><Mail className="w-6 h-6 text-[#00f3ff]"/></div><div><h4 className="text-white font-medium mb-1">Email Us</h4><p className="text-gray-400 text-sm">{site.email}</p></div></div>
                 <div className="flex items-start gap-4"><div className="w-12 h-12 rounded-lg bg-black/30 flex items-center justify-center border border-[#00f3ff]/20 flex-shrink-0"><Phone className="w-6 h-6 text-[#00f3ff]"/></div><div><h4 className="text-white font-medium mb-1">Call Us</h4><p className="text-gray-400 text-sm">+62 21 1234 5678</p><p className="text-gray-400 text-sm">+62 812 3456 7890</p></div></div>
               </div>
             </motion.div>

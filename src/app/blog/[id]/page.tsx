@@ -2,13 +2,46 @@ import { blogPosts, postById } from "@/lib/data";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, User, Clock } from "lucide-react";
+import type { Metadata } from "next";
+import { site } from "@/lib/site";
 export function generateStaticParams(){ return blogPosts.map(b=>({id:b.id})); }
+export async function generateMetadata({params}:{params:Promise<{id:string}>}):Promise<Metadata>{
+  const {id}=await params;
+  const p=postById(id);
+  if(!p) return {};
+  return {
+    title: p.title,
+    description: p.excerpt,
+    alternates: { canonical: `/blog/${p.id}` },
+    openGraph: {
+      type: "article",
+      title: p.title,
+      description: p.excerpt,
+      publishedTime: p.date,
+      authors: [p.author],
+      images: [{ url: p.image, alt: p.title }],
+    },
+    twitter: { card: "summary_large_image", title: p.title, description: p.excerpt, images: [p.image] },
+  };
+}
 export default async function BlogDetail({params}:{params:Promise<{id:string}>}){
   const {id}=await params;
   const p=postById(id);
   if(!p) notFound();
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: p.title,
+    description: p.excerpt,
+    image: p.image,
+    datePublished: p.date,
+    author: { "@type": "Person", name: p.author },
+    publisher: { "@type": "Organization", name: site.name, logo: { "@type": "ImageObject", url: `${site.url}/icons/icon-512.png` } },
+    mainEntityOfPage: `${site.url}/blog/${p.id}`,
+  };
   return (
     <div className="min-h-screen bg-black py-20 px-4">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
       <div className="max-w-3xl mx-auto">
         <Link href="/blog" className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-[#00f3ff] mb-8"><ArrowLeft className="w-4 h-4"/>Back to Blog</Link>
         <div className="rounded-xl overflow-hidden border border-gray-800 mb-8"><img src={p.image} alt={p.title} className="w-full h-64 md:h-80 object-cover"/></div>

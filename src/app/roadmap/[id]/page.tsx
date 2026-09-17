@@ -2,7 +2,19 @@ import { roadmaps, roadmapById } from "@/lib/data";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Clock, CheckCircle, ArrowLeft } from "lucide-react";
+import type { Metadata } from "next";
 export function generateStaticParams(){ return roadmaps.map(r=>({id:r.id})); }
+export async function generateMetadata({params}:{params:Promise<{id:string}>}):Promise<Metadata>{
+  const {id}=await params;
+  const r=roadmapById(id);
+  if(!r) return {};
+  return {
+    title: `${r.title} Roadmap`,
+    description: r.longDesc,
+    alternates: { canonical: `/roadmap/${r.id}` },
+    openGraph: { title: `${r.title} Roadmap | CYSEC`, description: r.longDesc },
+  };
+}
 export default async function RoadmapDetail({params}:{params:Promise<{id:string}>}){
   const {id}=await params;
   const r=roadmapById(id);

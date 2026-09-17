@@ -2,7 +2,19 @@ import { webinars, webinarById } from "@/lib/data";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Calendar, Clock, User, Play } from "lucide-react";
+import type { Metadata } from "next";
 export function generateStaticParams(){ return webinars.map(w=>({id:w.id})); }
+export async function generateMetadata({params}:{params:Promise<{id:string}>}):Promise<Metadata>{
+  const {id}=await params;
+  const w=webinarById(id);
+  if(!w) return {};
+  return {
+    title: w.title,
+    description: w.desc,
+    alternates: { canonical: `/webinars/${w.id}` },
+    openGraph: { title: `${w.title} | CYSEC`, description: w.desc },
+  };
+}
 export default async function WebinarDetail({params}:{params:Promise<{id:string}>}){
   const {id}=await params;
   const w=webinarById(id);

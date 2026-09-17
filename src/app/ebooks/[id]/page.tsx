@@ -2,7 +2,19 @@ import { ebooks, ebookById } from "@/lib/data";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, User, Clock, Download, BookOpen } from "lucide-react";
+import type { Metadata } from "next";
 export function generateStaticParams(){ return ebooks.map(e=>({id:e.id})); }
+export async function generateMetadata({params}:{params:Promise<{id:string}>}):Promise<Metadata>{
+  const {id}=await params;
+  const e=ebookById(id);
+  if(!e) return {};
+  return {
+    title: e.title,
+    description: e.desc,
+    alternates: { canonical: `/ebooks/${e.id}` },
+    openGraph: { title: `${e.title} | CYSEC`, description: e.desc, images: [{ url: e.image, alt: e.title }] },
+  };
+}
 export default async function EbookDetail({params}:{params:Promise<{id:string}>}){
   const {id}=await params;
   const e=ebookById(id);

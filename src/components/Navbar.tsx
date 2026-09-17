@@ -30,7 +30,7 @@ export default function Navbar(){
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           <Link href="/" className="flex items-center group">
-            <img src="/logo-cysec.png" alt="CYSEC Logo" className="h-16 w-16 object-contain group-hover:scale-110 transition-transform duration-300" />
+            <img src="/logo-cysec-sm.png" alt="CYSEC Logo" className="h-16 w-16 object-contain group-hover:scale-110 transition-transform duration-300" width={64} height={64} />
           </Link>
           <div className="hidden md:flex items-center gap-6">
             {navLinks.map(link=>(
